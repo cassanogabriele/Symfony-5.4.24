@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+	RewriteRule ^assets/css/(.*)$ public/assets/css/$1 [L]
+	RewriteRule ^assets/img/(.*)$ public/assets/img/$1 [L]
+	RewriteRule ^assets/js/(.*)$ public/assets/js/$1 [L]
+	RewriteRule ^uploads(.*)$ public/uploads/$1 [L]
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ %{ENV:BASE}/public/index.php [L]
+</IfModule>
